@@ -18,7 +18,7 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
 
     @test()
     protected static async canCallAddPhase() {
-        this.instance.addPhase('phase1')
+        this.instance.addPhase({ name: 'phase1' })
     }
 
     private static ExperimentBuilder() {

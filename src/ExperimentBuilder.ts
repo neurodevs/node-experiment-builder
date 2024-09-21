@@ -7,11 +7,15 @@ export default class ExperimentBuilderImpl implements ExperimentBuilder {
         return new (this.Class ?? this)()
     }
 
-    public addPhase(_name: string) {}
+    public addPhase(_protocol: PhaseProtocol) {}
 }
 
 export interface ExperimentBuilder {
-    addPhase(name: string): void
+    addPhase(protocol: PhaseProtocol): void
 }
 
 export type ExperimentBuilderConstructor = new () => ExperimentBuilder
+
+export interface PhaseProtocol {
+    name: string
+}
