@@ -1,4 +1,8 @@
-import AbstractSpruceTest, { test, assert } from '@sprucelabs/test-utils'
+import AbstractSpruceTest, {
+    test,
+    assert,
+    errorAssert,
+} from '@sprucelabs/test-utils'
 import ExperimentBuilderImpl, {
     ExperimentBuilder,
 } from '../../ExperimentBuilder'
@@ -17,10 +21,18 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
     }
 
     @test()
-    protected static async canCallAddPhase() {
-        this.instance.addPhase({ name: 'phase1' })
+    protected static async throwsWithMissingRequiredOptions() {
+        const err = assert.doesThrow(() => {
+            // @ts-ignore
+            this.instance.addPhase()
+        })
+
+        errorAssert.assertError(err, 'MISSING_PARAMETERS', {
+            parameters: ['protocol'],
+        })
     }
 
+    @test()
     private static ExperimentBuilder() {
         return ExperimentBuilderImpl.Create()
     }

@@ -1,3 +1,5 @@
+import { assertOptions } from '@sprucelabs/schema'
+
 export default class ExperimentBuilderImpl implements ExperimentBuilder {
     public static Class?: ExperimentBuilderConstructor
 
@@ -7,7 +9,9 @@ export default class ExperimentBuilderImpl implements ExperimentBuilder {
         return new (this.Class ?? this)()
     }
 
-    public addPhase(_protocol: PhaseProtocol) {}
+    public addPhase(protocol: PhaseProtocol) {
+        assertOptions({ protocol }, ['protocol'])
+    }
 }
 
 export interface ExperimentBuilder {
