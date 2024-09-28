@@ -28,6 +28,37 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
     }
 
     @test()
+    protected static async addBiosensorThrowsWithMissingRequiredOptions() {
+        const err = assert.doesThrow(() => {
+            // @ts-ignore
+            this.instance.addBiosensor()
+        })
+
+        errorAssert.assertError(err, 'MISSING_PARAMETERS', {
+            parameters: ['biosensor'],
+        })
+    }
+
+    @test()
+    protected static async addBiosensorReturnsThis() {
+        const instance = this.addBiosensor()
+
+        assert.isEqualDeep(
+            instance,
+            this.instance,
+            'addBiosensor should return this to allow chaining of method calls!'
+        )
+    }
+
+    @test()
+    protected static async addsBiosensorToBiosensors() {
+        this.addBiosensor()
+
+        const biosensors = this.instance.getBiosensors()
+        assert.isEqualDeep(biosensors, [this.testBiosensor])
+    }
+
+    @test()
     protected static async addPhaseThrowsWithMissingRequiredOptions() {
         const err = assert.doesThrow(() => {
             // @ts-ignore
@@ -70,29 +101,6 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
         assert.isEqualDeep(phases, [phase1, phase2])
     }
 
-    @test()
-    protected static async addBiosensorThrowsWithMissingRequiredOptions() {
-        const err = assert.doesThrow(() => {
-            // @ts-ignore
-            this.instance.addBiosensor()
-        })
-
-        errorAssert.assertError(err, 'MISSING_PARAMETERS', {
-            parameters: ['biosensor'],
-        })
-    }
-
-    @test()
-    protected static async addBiosensorReturnsThis() {
-        const instance = this.addBiosensor()
-
-        assert.isEqualDeep(
-            instance,
-            this.instance,
-            'addBiosensor should return this to allow chaining of method calls!'
-        )
-    }
-
     private static addBiosensor(biosensor?: Biosensor) {
         return this.instance.addBiosensor(biosensor ?? this.testBiosensor)
     }
@@ -109,6 +117,10 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
 class SpyExperimentBuilder extends ExperimentBuilderImpl {
     public constructor() {
         super()
+    }
+
+    public getBiosensors() {
+        return this.biosensors
     }
 
     public getPhases() {
