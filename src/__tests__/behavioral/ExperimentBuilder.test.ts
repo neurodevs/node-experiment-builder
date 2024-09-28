@@ -24,7 +24,7 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
     }
 
     @test()
-    protected static async throwsWithMissingRequiredOptions() {
+    protected static async addPhaseThrowsWithMissingRequiredOptions() {
         const err = assert.doesThrow(() => {
             // @ts-ignore
             this.instance.addPhase()

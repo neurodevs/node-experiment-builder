@@ -3,7 +3,7 @@ import { assertOptions } from '@sprucelabs/schema'
 export default class ExperimentBuilderImpl implements ExperimentBuilder {
     public static Class?: ExperimentBuilderConstructor
 
-    private phases: PhaseProtocol[] = []
+    protected phases: PhaseProtocol[] = []
 
     protected constructor() {}
 
