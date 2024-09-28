@@ -60,6 +60,18 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
     }
 
     @test()
+    protected static async canAddMultipleBiosensors() {
+        const biosensor1: Biosensor = {}
+        const biosensor2: Biosensor = {}
+
+        this.addBiosensor(biosensor1)
+        this.addBiosensor(biosensor2)
+
+        const biosensors = this.instance.getBiosensors()
+        assert.isEqualDeep(biosensors, [biosensor1, biosensor2])
+    }
+
+    @test()
     protected static async addPhaseThrowsWithMissingRequiredOptions() {
         const err = assert.doesThrow(() => {
             // @ts-ignore
