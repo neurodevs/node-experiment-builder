@@ -8,6 +8,7 @@ import ExperimentBuilderImpl, {
     Biosensor,
     PhaseProtocol,
 } from '../../ExperimentBuilder'
+import SpyExperimentBuilder from '../../testDoubles/SpyExperimentBuilder'
 
 export default class ExperimentBuilderTest extends AbstractSpruceTest {
     private static instance: SpyExperimentBuilder
@@ -111,19 +112,5 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
 
     private static ExperimentBuilder() {
         return ExperimentBuilderImpl.Create() as SpyExperimentBuilder
-    }
-}
-
-class SpyExperimentBuilder extends ExperimentBuilderImpl {
-    public constructor() {
-        super()
-    }
-
-    public getBiosensors() {
-        return this.biosensors
-    }
-
-    public getPhases() {
-        return this.phases
     }
 }
