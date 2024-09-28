@@ -16,10 +16,15 @@ export default class ExperimentBuilderImpl implements ExperimentBuilder {
         this.phases.push(phase)
         return this
     }
+
+    public addBiosensor(biosensor: Biosensor): void {
+        assertOptions({ biosensor }, ['biosensor'])
+    }
 }
 
 export interface ExperimentBuilder {
     addPhase(phase: PhaseProtocol): this
+    addBiosensor(biosensor: Biosensor): void
 }
 
 export type ExperimentBuilderConstructor = new () => ExperimentBuilder
@@ -27,3 +32,5 @@ export type ExperimentBuilderConstructor = new () => ExperimentBuilder
 export interface PhaseProtocol {
     name: string
 }
+
+export interface Biosensor {}

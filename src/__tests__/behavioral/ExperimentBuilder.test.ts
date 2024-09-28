@@ -66,6 +66,18 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
         assert.isEqualDeep(phases, [phase1, phase2])
     }
 
+    @test()
+    protected static async addBiosensorThrowsWithMissingRequiredOptions() {
+        const err = assert.doesThrow(() => {
+            // @ts-ignore
+            this.instance.addBiosensor()
+        })
+
+        errorAssert.assertError(err, 'MISSING_PARAMETERS', {
+            parameters: ['biosensor'],
+        })
+    }
+
     private static addPhase(phase?: PhaseProtocol) {
         return this.instance.addPhase(phase ?? this.testPhase)
     }
