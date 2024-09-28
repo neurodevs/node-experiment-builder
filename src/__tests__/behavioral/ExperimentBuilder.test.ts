@@ -5,6 +5,7 @@ import AbstractSpruceTest, {
 } from '@sprucelabs/test-utils'
 import ExperimentBuilderImpl, {
     ExperimentBuilder,
+    PhaseProtocol,
 } from '../../ExperimentBuilder'
 
 export default class ExperimentBuilderTest extends AbstractSpruceTest {
@@ -33,6 +34,19 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
     }
 
     @test()
+    protected static async addPhaseReturnsThis() {
+        const instance = this.addPhase({ name: 'test' })
+        assert.isEqual(
+            instance,
+            this.instance,
+            'addPhase should return this to allow chaining of method calls!'
+        )
+    }
+
+    private static addPhase(protocol: PhaseProtocol) {
+        return this.instance.addPhase(protocol)
+    }
+
     private static ExperimentBuilder() {
         return ExperimentBuilderImpl.Create()
     }

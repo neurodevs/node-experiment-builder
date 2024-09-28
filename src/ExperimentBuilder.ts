@@ -11,11 +11,12 @@ export default class ExperimentBuilderImpl implements ExperimentBuilder {
 
     public addPhase(protocol: PhaseProtocol) {
         assertOptions({ protocol }, ['protocol'])
+        return this
     }
 }
 
 export interface ExperimentBuilder {
-    addPhase(protocol: PhaseProtocol): void
+    addPhase(protocol: PhaseProtocol): this
 }
 
 export type ExperimentBuilderConstructor = new () => ExperimentBuilder
