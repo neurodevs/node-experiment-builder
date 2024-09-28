@@ -4,11 +4,15 @@ import AbstractSpruceTest, {
     errorAssert,
     generateId,
 } from '@sprucelabs/test-utils'
-import ExperimentBuilderImpl, { PhaseProtocol } from '../../ExperimentBuilder'
+import ExperimentBuilderImpl, {
+    Biosensor,
+    PhaseProtocol,
+} from '../../ExperimentBuilder'
 
 export default class ExperimentBuilderTest extends AbstractSpruceTest {
     private static instance: SpyExperimentBuilder
     private static readonly testPhase: PhaseProtocol = { name: generateId() }
+    private static readonly testBiosensor: Biosensor = {}
 
     protected static async beforeEach() {
         await super.beforeEach()
@@ -76,6 +80,21 @@ export default class ExperimentBuilderTest extends AbstractSpruceTest {
         errorAssert.assertError(err, 'MISSING_PARAMETERS', {
             parameters: ['biosensor'],
         })
+    }
+
+    @test()
+    protected static async addBiosensorReturnsThis() {
+        const instance = this.addBiosensor()
+
+        assert.isEqualDeep(
+            instance,
+            this.instance,
+            'addBiosensor should return this to allow chaining of method calls!'
+        )
+    }
+
+    private static addBiosensor(biosensor?: Biosensor) {
+        return this.instance.addBiosensor(biosensor ?? this.testBiosensor)
     }
 
     private static addPhase(phase?: PhaseProtocol) {
